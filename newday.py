@@ -3,6 +3,11 @@ import sys
 import os
 from pathlib import Path
 
+def get_data(base_url, day):
+  url = base_url + str(day) + "/input"
+  print(f"Getting url - {url}")
+  
+
 def create_data_folder(path):
   try:
     os.chdir(path)
@@ -30,12 +35,9 @@ def cargo_new(path, part):
     raise OSError(f"{error}")
   
   command = "cargo new part" + str(part)
-  print("-------------------")
-  print(f"Running command - {command}")
-  print("-------------------")
   os.system(command)
 
-def main(): 
+def create_path():
   day_number = 0
   path_base = '/Users/gnuchu/projects/adventofcode2022'
 
@@ -57,9 +59,16 @@ def main():
   except OSError as error:
     raise OSError(f"{error}")
 
+  return path
+
+def main():
+  base_url = "https://adventofcode.com/2022/day/"
+  path = create_path()
+  day = sys.argv[1]
   cargo_new(path, 1)
   cargo_new(path, 2)
   create_data_folder(path)
+  get_data(base_url, day)
 
 
 if __name__ == "__main__":
