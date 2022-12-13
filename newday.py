@@ -4,17 +4,15 @@ import os
 import shutil
 
 def cargo_new(path, part):
-  part_dir = path + '/' + 'part' + str(part)
-
   try:
-    os.chdir(part_dir)
+    os.chdir(path)
   except OSError as error:
     raise OSError(f"{error}")
   
   command = "cargo new part" + str(part)
-  print("--------------------")
+  print("-------------------")
   print(f"Running command - {command}")
-  print("--------------------")
+  print("-------------------")
   os.system(command)
 
 def main(): 
