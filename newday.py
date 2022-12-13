@@ -1,7 +1,27 @@
 #!/usr/bin/env python3
 import sys
 import os
-import shutil
+from pathlib import Path
+
+def create_data_folder(path):
+  try:
+    os.chdir(path)
+  except OSError as error:
+    raise OSError(f"{error}")
+  
+  p = os.path.join(path, 'data')
+  try:
+    os.mkdir(p)
+  except OSError as error:
+    raise OSError(f"{error}")
+  
+  try:
+    os.chdir(p)
+  except OSError as error:
+    raise OSError(f"{error}")
+  
+  data_file = os.path.join(p, 'data.txt')
+  Path(data_file).touch()
 
 def cargo_new(path, part):
   try:
@@ -16,7 +36,6 @@ def cargo_new(path, part):
   os.system(command)
 
 def main(): 
-  template = './template'
   day_number = 0
   path_base = '/Users/gnuchu/projects/adventofcode2022'
 
@@ -33,15 +52,14 @@ def main():
   if os.path.exists(folder):
     raise IsADirectoryError("Already exists")
   
-  source = path_base + '/' + template
-
   try:
-    shutil.copytree(source, path)
+    os.mkdir(path)
   except OSError as error:
     raise OSError(f"{error}")
 
   cargo_new(path, 1)
   cargo_new(path, 2)
+  create_data_folder(path)
 
 
 if __name__ == "__main__":
