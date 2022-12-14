@@ -3,6 +3,7 @@ import sys
 import os
 from pathlib import Path
 import requests
+import shutil
 
 def get_data(base_url, day):
   url = os.path.join(base_url, str(day), "input")
@@ -45,14 +46,19 @@ def create_data_folder(path):
   Path(data_file).touch()
   return data_file
 
-def cargo_new(path, part):
+def python_new(path, part):
   try:
     os.chdir(path)
   except OSError as error:
     raise OSError(f"{error}")
   
-  command = "cargo new part" + str(part)
-  os.system(command)
+  
+  filename = 'part' + str(part) + ".py"
+  template = '/Users/gnuchu/projects/adventofcode2022/template/template.py'
+  try:
+    shutil.copy(template, filename)
+  except OSError as error:
+    raise OSError(f"{error}")
 
 def create_path():
   day_number = 0
@@ -82,8 +88,8 @@ def main():
   base_url = "https://adventofcode.com/2022/day/"
   path = create_path()
   day = sys.argv[1]
-  cargo_new(path, 1)
-  cargo_new(path, 2)
+  python_new(path, 1)
+  python_new(path, 2)
   data_file = create_data_folder(path)
   data = get_data(base_url, day)
   write_data(data_file, data);
