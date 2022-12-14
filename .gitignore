@@ -1,0 +1,11 @@
+debug/
+target/
+
+day*/part*/target
+
+
+Cargo.lock
+
+**/*.rs.bk
+
+*.pdb

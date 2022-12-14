@@ -2,10 +2,26 @@
 import sys
 import os
 from pathlib import Path
+import requests
 
 def get_data(base_url, day):
-  url = base_url + str(day) + "/input"
+  url = os.path.join(base_url, str(day), "input")
+  token = ""  
   print(f"Getting url - {url}")
+
+  with open('/Users/gnuchu/.config/aocd/token', 'r') as f:
+    token = f.read().strip()
+
+  resp = requests.get(url, cookies={"session": token}, allow_redirects=False)
+  data = resp.text
+  return data
+
+def write_data(data_file, data):
+  try:
+    with open(data_file, "w") as f:
+      f.write(data)
+  except OSError as error:
+    raise OSError(f"{error}")
   
 
 def create_data_folder(path):
@@ -27,6 +43,7 @@ def create_data_folder(path):
   
   data_file = os.path.join(p, 'data.txt')
   Path(data_file).touch()
+  return data_file
 
 def cargo_new(path, part):
   try:
@@ -67,8 +84,9 @@ def main():
   day = sys.argv[1]
   cargo_new(path, 1)
   cargo_new(path, 2)
-  create_data_folder(path)
-  get_data(base_url, day)
+  data_file = create_data_folder(path)
+  data = get_data(base_url, day)
+  write_data(data_file, data);
 
 
 if __name__ == "__main__":
