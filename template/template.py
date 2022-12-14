@@ -12,8 +12,13 @@ def get_data_file_path():
   data_file_path = os.path.join(current_path, 'data/data.txt')
   return data_file_path
 
+
+def process_data(data):
+  pass
+
+
 if __name__ == "__main__":
     path = get_data_file_path()
     data = read_data(path)
 
-    print(data)
+    process_data(data)
