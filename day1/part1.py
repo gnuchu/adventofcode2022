@@ -30,7 +30,9 @@ def process_data(data):
     totals[i] = total_cals
 
   sorted_dict = sorted(totals.items(), key = lambda x:x[1])
-  print(sorted_dict)
+  k = len(sorted_dict) - 1
+
+  print(f"The answer to the quiz is: Elf #{sorted_dict[k][0]} with {sorted_dict[k][1]} calories")
 
 if __name__ == "__main__":
     path = get_data_file_path()
