@@ -9,3 +9,5 @@ Cargo.lock
 **/*.rs.bk
 
 *.pdb
+
+__pycache_:wq_
