@@ -8,7 +8,7 @@ def read_data(path):
   return data
 
 def get_data_file_path():
-  current_path = pathlib.Path(__file__).parent
+  current_path = pathlib.Path(__file__).parent.parent
   data_file_path = os.path.join(current_path, 'data/data.txt')
   return data_file_path
 
