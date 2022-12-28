@@ -11,3 +11,6 @@ Cargo.lock
 *.pdb
 
 __pycache_:wq_
+
+**/__pycache__/
+
