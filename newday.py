@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import requests
 import shutil
+import pathlib
 
 def get_data(base_url, day):
   url = os.path.join(base_url, str(day), "input")
@@ -25,13 +26,13 @@ def write_data(data_file, data):
     raise OSError(f"{error}")
   
 
-def create_data_folder(path):
+def create_data_folder(day_path):
   try:
-    os.chdir(path)
+    os.chdir(day_path)
   except OSError as error:
     raise OSError(f"{error}")
   
-  p = os.path.join(path, 'data')
+  p = os.path.join(day_path, 'data')
   try:
     os.mkdir(p)
   except OSError as error:
@@ -46,54 +47,52 @@ def create_data_folder(path):
   Path(data_file).touch()
   return data_file
 
-def python_new(path):
+def python_new(day_apth, base_path):
   try:
-    os.chdir(path)
+    os.chdir(day_apth)
   except OSError as error:
     raise OSError(f"{error}")
   
   parts = ['1', '2']
-  template = '/Users/gnuchu/projects/adventofcode2022/template/template.py'
+  template = os.path.join(base_path, 'template/template.py')
 
   try:
     for part in parts:
       name = 'part' + part
-      os.mkdir(name)    
+      os.mkdir(name)   
       filename = f"{name}/{name}" + ".py"
       shutil.copy(template, filename)
   except OSError as error:
     raise OSError(f"{error}")
   
-def create_path():
-  day_number = 0
-  path_base = '/Users/gnuchu/projects/adventofcode2022'
-
-  if len(sys.argv) < 2:
-    raise ValueError("Pass in day number")
-
-  try: 
-    day_number = int(sys.argv[1])
-  except:
-    raise ValueError("Can't convert passed day number to int")
+def create_path(day_number, base_path):
 
   folder = "day" + str(day_number)
-  path = path_base + '/' + folder
-  if os.path.exists(folder):
+  folder_path = os.path.join(base_path, folder)
+
+  if os.path.exists(folder_path):
     raise IsADirectoryError("Already exists")
   
   try:
-    os.mkdir(path)
+    os.mkdir(folder_path)
   except OSError as error:
     raise OSError(f"{error}")
 
-  return path
+  return folder_path
 
 def main():
   base_url = "https://adventofcode.com/2022/day/"
-  path = create_path()
+  base_path = pathlib.Path().cwd()
+  
+  if len(sys.argv) < 2:
+    raise("Please supply day number as an argument")
+
   day = sys.argv[1]
-  python_new(path)
-  data_file = create_data_folder(path)
+  day_path = create_path(day_number=day, base_path=base_path)
+
+  python_new(day_path, base_path)
+  
+  data_file = create_data_folder(day_path)
   data = get_data(base_url, day)
   write_data(data_file, data);
 
@@ -102,4 +101,3 @@ if __name__ == "__main__":
   # for i, p in enumerate(sys.argv):
   #   print(f"Param {i} - {p}")
   main()
-
