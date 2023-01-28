@@ -13,15 +13,17 @@ def get_data_file_path():
   data_file_path = os.path.join(current_path, 'data/data.txt')
   return data_file_path
 
-def get_test_data_file_path():
-  current_path = pathlib.Path(__file__).parent.parent
-  data_file_path = os.path.join(current_path, 'data/test_data.txt')
-  return data_file_path
+def get_test_data_file_path(part):
+    current_path = pathlib.Path(__file__).parent.parent
+    data_file_path = os.path.join(current_path, f"data/test_data_part{part}.txt")
+    return data_file_path
 
 def process_data(data):
   pass
 
 if __name__ == "__main__":
+  part = FAIL_TO_COMPILE_IF_NOT_ENTERED
+  
     if os.environ['TEST']:
       path = get_test_data_file_path()
     else:
