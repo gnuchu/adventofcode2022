@@ -19,7 +19,9 @@ def get_test_data_file_path(part):
     return data_file_path
 
 def process_data(data):
-  pass
+    for n, line in enumerate(data.split("\n")):
+        print(f"{n}: {line}")
+
 
 if __name__ == "__main__":
   part = FAIL_TO_COMPILE_IF_NOT_ENTERED
