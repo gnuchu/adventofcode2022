@@ -35,6 +35,10 @@ def create_data_folder(day_path):
   p = os.path.join(day_path, 'data')
   try:
     os.mkdir(p)
+    test_data_path = os.path.join(p, 'test_data_part1.txt')
+    pathlib.Path(test_data_path).touch()
+    test_data_path = os.path.join(p, 'test_data_part2.txt')
+    pathlib.Path(test_data_path).touch()
   except OSError as error:
     raise OSError(f"{error}")
   

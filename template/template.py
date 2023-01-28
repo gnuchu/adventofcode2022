@@ -24,11 +24,12 @@ def process_data(data):
 if __name__ == "__main__":
   part = FAIL_TO_COMPILE_IF_NOT_ENTERED
   
-    if os.environ['TEST']:
-      path = get_test_data_file_path()
-    else:
+  try:
+      if os.environ['TEST'] is not None:
+          path = get_test_data_file_path()
+  except:
       path = get_data_file_path()
 
-    data = read_data(path)
+  data = read_data(path)
 
-    process_data(data)
+  process_data(data)
