@@ -21,9 +21,13 @@ def get_data(base_url, day):
 def write_data(data_file, data):
   # Remove empty line
   temp_data = ""
+  first = 1
   for line in data.split("\n"):
     if line != "":
-      temp_data += "\n"
+      if not first:
+          temp_data += "\n"
+      else:
+          first = 0
       temp_data += line
   data = temp_data
   
